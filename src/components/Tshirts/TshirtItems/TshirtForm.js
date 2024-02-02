@@ -1,55 +1,97 @@
 import classes from "./TshirtForm.module.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import Input from "../../UI/Input";
+import CartContext from "../../../store/cart-context";
 
 const TshirtForm = (props) => {
+  const cartCtx = useContext(CartContext);
+  const smallQuantity = useRef();
+  const mediumQuantity = useRef();
+  const largeQuantity = useRef();
   const [amountIsValid, setAmountIsValid] = useState(true);
-  const [quantities, setQuantities] = useState({
-    small: 0,
-    medium: 0,
-    large: 0,
-  });
-  //<button onClick={() => updateQuantity(size, -1)}>-</button>
-  const updateQuantity = (size, amount) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [size]: Math.max(prevQuantities[size] + amount, 0),
-    }));
-  };
-  const sizes = (
-    <div className={classes.quantity}>
-      {["small", "medium", "large"].map((size) => (
-        <div className={classes.span} key={size}>
-          <span>{`${size.charAt(0).toUpperCase()}${size.slice(1)} (${
-            props[size]
-          })`}</span>
-          <div className={classes.buttonn}>
-            <button onClick={() => updateQuantity(size, 1)}>Add+</button>
-            <span>{quantities[size]}</span>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
 
-  const totalQuantity = Object.values(quantities).reduce(
-    (total, quantity) => total + quantity,
-    0
-  );
+  const smallout = cartCtx.items.reduce((curNumber, item) => {
+    return curNumber + item.smallQuantity;
+  }, 0);
+  const smallremain = `${props.small}` - smallout;
+
+  const mediumout = cartCtx.items.reduce((curNumber, item) => {
+    return curNumber + item.mediumQuantity;
+  }, 0);
+  const mediumremain = `${props.medium}` - mediumout;
+
+  const largeout = cartCtx.items.reduce((curNumber, item) => {
+    return curNumber + item.largeQuantity;
+  }, 0);
+  const largeremain = `${props.large}` - largeout;
 
   const submitHandler = (e) => {
     e.preventDefault();
+    let smallQuantityNum = Number(smallQuantity.current.value);
+    let mediumQuantityNum = Number(mediumQuantity.current.value);
+    let largeQuantityNum = Number(largeQuantity.current.value);
 
-    if (totalQuantity < 0 || totalQuantity > 8) {
+    const enteredAmount =
+      smallQuantityNum + mediumQuantityNum + largeQuantityNum;
+
+    if (enteredAmount < 0 || enteredAmount > 8) {
       setAmountIsValid(false);
       return;
     }
-    props.onAddToCart(totalQuantity, quantities);
+    if (enteredAmount > 0) {
+      props.onAddToCart(
+        enteredAmount,
+        smallQuantityNum,
+        mediumQuantityNum,
+        largeQuantityNum
+      );
+    }
+    console.log(
+      enteredAmount,
+      smallQuantityNum,
+      mediumQuantityNum,
+      largeQuantityNum
+    );
   };
 
   return (
     <>
       <form className={classes.form} onSubmit={submitHandler}>
-        {sizes}
+        <Input
+          ref={smallQuantity}
+          label={`Small (${smallremain})`}
+          input={{
+            id: "small",
+            type: "number",
+            min: 0,
+            max: 8,
+            defaultValue: 0,
+          }}
+        ></Input>
+        <Input
+          ref={mediumQuantity}
+          label={`Medium (${mediumremain})`}
+          input={{
+            id: "medium",
+            type: "number",
+            min: 0,
+            max: 8,
+            defaultValue: 0,
+          }}
+        ></Input>
+        <Input
+          ref={largeQuantity}
+          label={`Large (${largeremain})`}
+          input={{
+            id: "large",
+            type: "number",
+            min: 0,
+            max: 8,
+            defaultValue: 0,
+          }}
+        ></Input>
+        <button>+ Add product</button>
+
         {!amountIsValid && <p>Please enter valid amount (1-8).</p>}
       </form>
     </>

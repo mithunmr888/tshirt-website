@@ -13,9 +13,9 @@
   }
   
   .summary {
-    width: 10rem;
+    
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
   }
   
@@ -25,10 +25,22 @@
   }
   
   .amount {
+    width: 2rem;
     font-weight: bold;
     border: 1px solid #ccc;
     padding: 0.25rem 0.75rem;
     border-radius: 6px;
+    color:  rgb(230, 226, 226);
+    margin-left: 1rem;
+  }
+
+  .quantity {
+    width: 8.5rem;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    margin-left: 1rem;
     color:  rgb(230, 226, 226);
   }
   

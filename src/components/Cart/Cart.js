@@ -26,7 +26,9 @@ const Cart = (props) => {
             name={item.name}
             amount={item.amount}
             price={item.price}
-            quantity={item.quantity}
+            smallQuantity={item.smallQuantity}
+            mediumQuantity={item.mediumQuantity}
+            largeQuantity={item.largeQuantity}
             onRemove={cartItemRemoveHandler.bind(null, item.id)}
             onAdd={cartItemAddHandler.bind(null, item)}
           ></CartTshirt>
