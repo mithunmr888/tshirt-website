@@ -1,6 +1,12 @@
 import classes from "./AvailableTshirts.module.css";
 import TshirtItem from "./TshirtItems/TshirtItem";
 import Card from "../UI/Card";
+import tshirt1 from "../../assets/tshirtimage1.jpg";
+import tshirt2 from "../../assets/tshirtimage2.jpg";
+import tshirt3 from "../../assets/tshirtimage3.jpg";
+import tshirt4 from "../../assets/tshirtimage4.jpg";
+import tshirt5 from "../../assets/tshirtimage5.jpg";
+import tshirt6 from "../../assets/tshirtimage6.jpg";
 
 const DUMMY_TSHIRTS = [
   {
@@ -12,6 +18,7 @@ const DUMMY_TSHIRTS = [
     small: 55,
     medium: 85,
     large: 95,
+    image: tshirt1,
   },
   {
     id: "m2",
@@ -22,6 +29,7 @@ const DUMMY_TSHIRTS = [
     small: 59,
     medium: 7,
     large: 10,
+    image: tshirt2,
   },
   {
     id: "m3",
@@ -32,6 +40,7 @@ const DUMMY_TSHIRTS = [
     small: 20,
     medium: 55,
     large: 10,
+    image: tshirt3,
   },
   {
     id: "m4",
@@ -42,6 +51,7 @@ const DUMMY_TSHIRTS = [
     small: 48,
     medium: 59,
     large: 15,
+    image: tshirt4,
   },
   {
     id: "m5",
@@ -52,6 +62,7 @@ const DUMMY_TSHIRTS = [
     small: 89,
     medium: 10,
     large: 97,
+    image: tshirt5,
   },
   {
     id: "m6",
@@ -62,6 +73,7 @@ const DUMMY_TSHIRTS = [
     small: 5,
     medium: 3,
     large: 1,
+    image: tshirt6,
   },
 ];
 
@@ -73,6 +85,7 @@ const AvailableTshirts = (props) => {
       name={tshirt.name}
       description={tshirt.description}
       price={tshirt.price}
+      image={tshirt.image}
       large={tshirt.large}
       small={tshirt.small}
       medium={tshirt.medium}

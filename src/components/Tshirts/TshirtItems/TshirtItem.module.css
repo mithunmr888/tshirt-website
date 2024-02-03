@@ -11,6 +11,9 @@
     margin: 0 0 0.25rem 0;
   }
   
+  .meal img {
+    width: 15rem;
+  }
   .description {
     font-style: italic;
   }

@@ -16,6 +16,7 @@
   .button:hover,
   .button:active {
     background-color: #d5d5d5;
+    box-shadow: 0 3px 10px rgb(255, 255, 255);
     border: 0.5px solid #000000;
     color: black;
   }
