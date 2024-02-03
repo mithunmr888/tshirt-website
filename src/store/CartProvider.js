@@ -17,6 +17,12 @@ const cartReducer = (state, action) => {
       const updatedItem = {
         ...existingCartItem,
         amount: existingCartItem.amount + 1,
+        smallQuantity:
+          existingCartItem.smallQuantity + action.item.smallQuantity,
+        mediumQuantity:
+          existingCartItem.mediumQuantity + action.item.mediumQuantity,
+        largeQuantity:
+          existingCartItem.largeQuantity + action.item.largeQuantity,
       };
 
       updatedItems = [...state.items];

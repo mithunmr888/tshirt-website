@@ -5,26 +5,11 @@ import CartContext from "../../../store/cart-context";
 
 const TshirtItem = (props) => {
   const cartCtx = useContext(CartContext);
-  const addToCartHandler = (
-    amount,
-    smallQuantity,
-    mediumQuantity,
-    largeQuantity
-  ) => {
-    cartCtx.addItem({
-      id: props.id,
-      name: props.name,
-      amount: amount,
-      price: props.price,
-      small: props.small,
-      medium: props.medium,
-      large: props.large,
-      smallQuantity: smallQuantity,
-      mediumQuantity: mediumQuantity,
-      largeQuantity: largeQuantity,
-    });
-    console.log(cartCtx.items);
+
+  const addToCartHandler = (item) => {
+    cartCtx.addItem(item);
   };
+
   return (
     <li className={classes.meal}>
       <div>
@@ -35,10 +20,13 @@ const TshirtItem = (props) => {
       <div>
         <TshirtForm
           onAddToCart={addToCartHandler}
+          id={props.id}
+          name={props.name}
+          price={props.price}
           small={props.small}
           medium={props.medium}
           large={props.large}
-        ></TshirtForm>
+        />
       </div>
     </li>
   );

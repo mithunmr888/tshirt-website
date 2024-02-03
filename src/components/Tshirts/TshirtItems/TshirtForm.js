@@ -9,30 +9,22 @@ const TshirtForm = (props) => {
   const mediumQuantity = useRef();
   const largeQuantity = useRef();
   const [amountIsValid, setAmountIsValid] = useState(true);
+
   const currentTshirtId = props.id;
 
-  const smallout = cartCtx.items.reduce((curNumber1, item) => {
-    if (item.id === currentTshirtId) {
-      return curNumber1 - item.smallQuantity;
-    }
-    return curNumber1;
-  }, props.small);
-
-  const mediumout = cartCtx.items.reduce((curNumber, item) => {
-    if (item.id === currentTshirtId) {
-      return curNumber + item.mediumQuantity;
-    }
-    return curNumber;
+  const smallout = props.small - cartCtx.items.reduce((curNumber1, item) => {
+    return item.id === currentTshirtId ? curNumber1 + item.smallQuantity : curNumber1;
   }, 0);
-  const mediumremain = props.medium - mediumout;
 
-  const largeout = cartCtx.items.reduce((curNumber, item) => {
-    if (item.id === currentTshirtId) {
-      return curNumber + item.largeQuantity;
-    }
-    return curNumber;
+  const mediumout = props.medium - cartCtx.items.reduce((curNumber, item) => {
+    return item.id === currentTshirtId ? curNumber + item.mediumQuantity : curNumber;
   }, 0);
-  const largeremain = props.large - largeout;
+  
+
+  const largeout = props.large - cartCtx.items.reduce((curNumber, item) => {
+    return item.id === currentTshirtId ? curNumber + item.largeQuantity : curNumber;
+  }, 0);
+  
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -50,18 +42,22 @@ const TshirtForm = (props) => {
 
     if (enteredAmount > 0) {
       props.onAddToCart(
-        enteredAmount,
-        smallQuantityNum,
-        mediumQuantityNum,
-        largeQuantityNum
+        {
+          id: props.id,
+          name: props.name,
+          amount: enteredAmount,
+          price: props.price,
+          small: props.small,
+          medium: props.medium,
+          large: props.large,
+          smallQuantity: smallQuantityNum,
+          mediumQuantity: mediumQuantityNum,
+          largeQuantity: largeQuantityNum,
+        }
       );
     }
-    console.log(
-      enteredAmount,
-      smallQuantityNum,
-      mediumQuantityNum,
-      largeQuantityNum
-    );
+
+  
     smallQuantity.current.value = 0;
     mediumQuantity.current.value = 0;
     largeQuantity.current.value = 0;
@@ -83,7 +79,7 @@ const TshirtForm = (props) => {
         ></Input>
         <Input
           ref={mediumQuantity}
-          label={`Medium (${mediumremain})`}
+          label={`Medium (${mediumout})`}
           input={{
             id: "medium",
             type: "number",
@@ -94,7 +90,7 @@ const TshirtForm = (props) => {
         ></Input>
         <Input
           ref={largeQuantity}
-          label={`Large (${largeremain})`}
+          label={`Large (${largeout})`}
           input={{
             id: "large",
             type: "number",
